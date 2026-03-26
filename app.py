@@ -7,7 +7,7 @@ import math
 from dateutil.relativedelta import relativedelta, TH
 
 # --- CONFIGURATION ---
-st.set_page_config(page_title="Indian IPO Blog | Deep OTM Screener", layout="wide", page_icon="📈")
+st.set_page_config(page_title="Indian IPO Blog | Ironclad Risk Screener", layout="wide", page_icon="🛡️")
 
 FO_STOCKS = {
     'AARTIIND.NS': 1000, 'ABB.NS': 250, 'ABBOTINDIA.NS': 40, 'ABCAPITAL.NS': 5400, 'ABFRL.NS': 2600, 'ACC.NS': 300, 'ADANIENT.NS': 300, 'ADANIPORTS.NS': 800, 'ALKEM.NS': 200, 'AMBUJACEM.NS': 1800, 'APOLLOHOSP.NS': 125, 'APOLLOTYRE.NS': 1700, 'ASHOKLEY.NS': 5000, 'ASIANPAINT.NS': 200, 'ASTRAL.NS': 275, 'ATUL.NS': 75, 'AUBANK.NS': 1000, 'AUROPHARMA.NS': 1000, 'AXISBANK.NS': 625, 'BAJAJ-AUTO.NS': 125, 'BAJAJFINSV.NS': 500, 'BAJFINANCE.NS': 125, 'BALKRISIND.NS': 300, 'BALRAMCHIN.NS': 1600, 'BANDHANBNK.NS': 2500, 'BANKBARODA.NS': 5850, 'BATAINDIA.NS': 375, 'BEL.NS': 3800, 'BERGEPAINT.NS': 1100, 'BHARATFORG.NS': 500, 'BHARTIARTL.NS': 950, 'BHEL.NS': 5250, 'BIOCON.NS': 2500, 'BOSCHLTD.NS': 50, 'BPCL.NS': 1800, 'BRITANNIA.NS': 200, 'CANBK.NS': 2700, 'CANFINHOME.NS': 975, 'CHAMBLFERT.NS': 1900, 'CHOLAFIN.NS': 1250, 'CIPLA.NS': 650, 'COALINDIA.NS': 4200, 'COFORGE.NS': 150, 'COLPAL.NS': 350, 'CONCOR.NS': 1000, 'COROMANDEL.NS': 700, 'CROMPTON.NS': 1800, 'CUB.NS': 5000, 'CUMMINSIND.NS': 300, 'DABUR.NS': 1250, 'DALBHARAT.NS': 250, 'DEEPAKNTR.NS': 300, 'DIVISLAB.NS': 200, 'DIXON.NS': 100, 'DLF.NS': 1650, 'DRREDDY.NS': 125, 'EICHERMOT.NS': 175, 'ESCORTS.NS': 275, 'EXIDEIND.NS': 3600, 'FEDERALBNK.NS': 5000, 'GAIL.NS': 9150, 'GLENMARK.NS': 700, 'GMRINFRA.NS': 11250, 'GNFC.NS': 1300, 'GODREJCP.NS': 500, 'GODREJPROP.NS': 475, 'GRANULES.NS': 2000, 'GRASIM.NS': 475, 'GUJGASLTD.NS': 1250, 'HAL.NS': 300, 'HAVELLS.NS': 500, 'HCLTECH.NS': 700, 'HDFCAMC.NS': 150, 'HDFCBANK.NS': 550, 'HDFCLIFE.NS': 1100, 'HEROMOTOCO.NS': 300, 'HINDALCO.NS': 1400, 'HINDCOPPER.NS': 4300, 'HINDPETRO.NS': 2700, 'HINDUNILVR.NS': 300, 'ICICIBANK.NS': 700, 'ICICIGI.NS': 500, 'ICICIPRULI.NS': 1500, 'IDEA.NS': 80000, 'IDFCFIRSTB.NS': 15000, 'IEX.NS': 3750, 'IGL.NS': 1375, 'INDHOTEL.NS': 2000, 'INDIACEM.NS': 2900, 'INDIAMART.NS': 150, 'INDIGO.NS': 300, 'INDUSINDBK.NS': 500, 'INDUSTOWER.NS': 3400, 'INFY.NS': 400, 'IOC.NS': 9750, 'IPCALAB.NS': 650, 'IRCTC.NS': 875, 'ITC.NS': 1600, 'JINDALSTEL.NS': 1250, 'JKCEMENT.NS': 250, 'JSWSTEEL.NS': 675, 'JUBLFOOD.NS': 1250, 'KOTAKBANK.NS': 400, 'L&TFH.NS': 4462, 'LALPATHLAB.NS': 250, 'LAURUSLABS.NS': 1700, 'LICHSGFIN.NS': 2000, 'LT.NS': 300, 'LTIM.NS': 150, 'LTTS.NS': 200, 'LUPIN.NS': 850, 'M&M.NS': 350, 'M&MFIN.NS': 4000, 'MANAPPURAM.NS': 6000, 'MARICO.NS': 1200, 'MARUTI.NS': 50, 'MCX.NS': 400, 'METROPOLIS.NS': 400, 'MFSL.NS': 800, 'MGL.NS': 800, 'MOTHERSON.NS': 7100, 'MPHASIS.NS': 275, 'MRF.NS': 10, 'MUTHOOTFIN.NS': 550, 'NATIONALUM.NS': 7500, 'NAUKRI.NS': 150, 'NAVINFLUOR.NS': 150, 'NESTLEIND.NS': 400, 'NMDC.NS': 4500, 'NTPC.NS': 3000, 'OBEROIRLTY.NS': 700, 'OFSS.NS': 200, 'ONGC.NS': 3850, 'PAGEIND.NS': 15, 'PEL.NS': 750, 'PERSISTENT.NS': 175, 'PETRONET.NS': 3000, 'PFC.NS': 3875, 'PIDILITIND.NS': 250, 'PIIND.NS': 250, 'PNB.NS': 8000, 'POLYCAB.NS': 100, 'POWERGRID.NS': 3600, 'PVRINOX.NS': 407, 'RAMCOCEM.NS': 850, 'RBLBANK.NS': 2500, 'RECLTD.NS': 2000, 'RELIANCE.NS': 250, 'SAIL.NS': 8000, 'SBICARD.NS': 800, 'SBILIFE.NS': 750, 'SBIN.NS': 1500, 'SHREECEM.NS': 25, 'SHRIRAMFIN.NS': 300, 'SIEMENS.NS': 150, 'SRF.NS': 375, 'SUNTV.NS': 1500, 'SYNGENE.NS': 1000, 'TATACHEM.NS': 550, 'TATACOMM.NS': 500, 'TATACONSUM.NS': 900, 'TATAMOTORS.NS': 1425, 'TATAPOWER.NS': 3375, 'TATASTEEL.NS': 5500, 'TCS.NS': 175, 'TECHM.NS': 600, 'TITAN.NS': 175, 'TORNTPHARM.NS': 250, 'TRENT.NS': 400, 'TVSMOTOR.NS': 700, 'UBL.NS': 400, 'ULTRACEMCO.NS': 100, 'UPL.NS': 1300, 'VEDL.NS': 2000, 'VOLTAS.NS': 600, 'WIPRO.NS': 1500, 'ZEEL.NS': 3000, 'ZYDUSLIFE.NS': 900
@@ -15,7 +15,7 @@ FO_STOCKS = {
 
 ULTRA_LIQUID_STOCKS = ['RELIANCE', 'HDFCBANK', 'ICICIBANK', 'INFY', 'TCS', 'SBIN', 'ITC', 'TATAMOTORS', 'AXISBANK', 'KOTAKBANK', 'LT', 'BAJFINANCE', 'BHARTIARTL']
 
-# --- FORMATTERS & REAL-WORLD STRIKE MAPPING ---
+# --- FORMATTERS & MAPPING ---
 def fmt_inr(number): return f"₹{int(number):,}" if pd.notna(number) else "₹0"
 def fmt_inr_dec(number): return f"₹{number:,.2f}" if pd.notna(number) else "₹0.00"
 
@@ -61,8 +61,7 @@ def get_real_strike(cmp, raw_target):
     elif cmp <= 10000: step = 50
     elif cmp <= 30000: step = 100
     else: step = 500
-    real_strike = math.ceil(raw_target / step) * step
-    return real_strike
+    return math.ceil(raw_target / step) * step
 
 # --- QUANT ENGINE ---
 def norm_cdf(x): return (1.0 + math.erf(x / math.sqrt(2.0))) / 2.0
@@ -78,11 +77,9 @@ def black_scholes_metrics(S, K, days_to_expiry, hv_annualized):
     
     call_price = S * norm_cdf(d1) - K * math.exp(-r * T) * norm_cdf(d2)
     delta = norm_cdf(d1)
-    
     theta_annual = -(S * norm_pdf(d1) * sigma) / (2 * math.sqrt(T)) - r * K * math.exp(-r * T) * norm_cdf(d2)
-    theta_daily = theta_annual / 365.0
     
-    return max(call_price, 0.1), delta, theta_daily 
+    return max(call_price, 0.1), delta, theta_annual / 365.0
 
 @st.cache_data(ttl=3600)
 def fetch_market_data(tickers_dict):
@@ -136,55 +133,30 @@ def process_screener_data(historical_data, tickers_dict, margin_available, call_
         best_stock_rank = (-999, -999) 
         best_stock_trade = None
         
-        # EXCISED 5% and 7%. FORCING DEEP OTM ONLY:
+        # Scans robust OTM intervals
         for up in [10, 12, 15, 18, 20]:
             raw_target_p = cmp * (1 + (up / 100))
             real_target_p = get_real_strike(cmp, raw_target_p)
             actual_up_pct = ((real_target_p - cmp) / cmp) * 100
             
             prob = (len(rolling_returns[rolling_returns >= actual_up_pct]) / total_periods) * 100 if total_periods > 0 else 0
-            
             bs_price, delta, theta = black_scholes_metrics(cmp, real_target_p, days_to_expiry, hv)
-            
-            safety_score = 100
-            prob_penalty = -(prob * 2.0) 
-            vol_penalty = -(hv / 2.0)    
-            
             days_above_target_3m = len(stock_high.tail(63)[stock_high.tail(63) >= real_target_p])
-            days_above_target_older_3m = max(0, len(stock_high.tail(126)[stock_high.tail(126) >= real_target_p]) - days_above_target_3m)
             
-            res_adj = 0
-            res_adj -= min(days_above_target_3m * 5.0, 50) 
-            res_adj -= min(days_above_target_older_3m * 2.0, 20) 
-
-            if real_target_p > high_52w: res_adj += 10  
-
-            rsi_adj = 0
-            if rsi_14 > 70: rsi_adj = +10  
-            elif rsi_14 < 40: rsi_adj = -20 
+            # --- THE SEQUENTIAL VETO ENGINE (HARD LIMITS) ---
+            veto_reason = None
             
-            delta_penalty = 0
-            if delta > 0.12:
-                delta_penalty = -(delta - 0.12) * 250 
+            if call_type == "Naked (Uncovered)":
+                if actual_up_pct < 10.0: veto_reason = f"Actual Upside Too Low ({actual_up_pct:.1f}%)"
+                elif prob > 8.0: veto_reason = f"Historical Breach Too High ({prob:.1f}%)"
+                elif delta > 0.12: veto_reason = f"Theoretical Risk Too High (Delta {delta:.2f})"
+                elif days_above_target_3m > 0: veto_reason = f"Recent Resistance (Traded above strike in last 3M)"
+            else:
+                # Covered Calls tolerate slightly more risk due to equity hedge
+                if actual_up_pct < 7.0: veto_reason = f"Actual Upside Too Low ({actual_up_pct:.1f}%)"
+                elif prob > 15.0: veto_reason = f"Historical Breach Too High ({prob:.1f}%)"
+                elif delta > 0.20: veto_reason = f"Theoretical Risk Too High (Delta {delta:.2f})"
             
-            theta_bonus = min(abs(theta) * 3, 10) 
-
-            safety_score = 100 + prob_penalty + vol_penalty + res_adj + rsi_adj + delta_penalty + theta_bonus
-            safety_score = max(0, min(100, safety_score))
-
-            score_breakdown = {
-                "Base Score": 100,
-                f"Real Target Upside (Rounded Up)": f"{actual_up_pct:.1f}%",
-                f"Prob. Penalty ({prob:.0f}%)": round(prob_penalty, 1),
-                f"Volatility Penalty ({hv:.1f}%)": round(vol_penalty, 1),
-                f"Resistance: Days breached in last 3M ({days_above_target_3m} days)": round(-min(days_above_target_3m * 5.0, 50), 1),
-                f"Resistance: Days breached in 3M-6M window ({days_above_target_older_3m} days)": round(-min(days_above_target_older_3m * 2.0, 20), 1),
-                f"RSI Momentum Adj. ({rsi_14:.0f})": round(rsi_adj, 1),
-                f"Delta Penalty (Δ {delta:.2f})": round(delta_penalty, 1),
-                f"Theta Bonus (Θ {abs(theta):.2f}/day)": round(theta_bonus, 1),
-                "Final Safety Score": round(safety_score, 1)
-            }
-
             prof_per_lot = bs_price * lot_size
             cont_value = cmp * lot_size
             
@@ -197,55 +169,62 @@ def process_screener_data(historical_data, tickers_dict, margin_available, call_
             tot_prof = prof_per_lot * lots
             liq = estimate_liquidity(clean_symbol, actual_up_pct)
             
-            if lots > 0 and liq != "🔴 Low":
-                is_qualified = False
-                if call_type == "Naked (Uncovered)" and safety_score >= 40 and delta <= 0.15:
-                    is_qualified = True
-                elif call_type == "Covered (Hold underlying shares)" and safety_score >= 25 and delta <= 0.25:
-                    is_qualified = True
-                    
-                if is_qualified:
-                    rank_tuple = (safety_score, tot_prof) 
-                    if rank_tuple > best_stock_rank:
-                        best_stock_rank = rank_tuple
-                        best_stock_trade = {
-                            'Stock': clean_symbol, 'Sector': sector, 'Upside': f"{actual_up_pct:.1f}", 'Target': real_target_p,
-                            'Lots': lots, 'Total_Profit': tot_prof, 'Risk': prob, 'Safety_Score': safety_score,
-                            'HV': hv, 'Delta': delta, 'Margin': marg_req * lots if call_type == "Naked (Uncovered)" else cont_value * lots,
-                            'Breakdown': score_breakdown
-                        }
+            if lots == 0: veto_reason = "Insufficient Capital"
+            if liq == "🔴 Low": veto_reason = "Illiquid Option"
+
+            # Only calculate score if it survives the Veto Gauntlet
+            if veto_reason is None:
+                safety_score = 100 - (prob * 2.0) - (hv / 2.0)
+                if real_target_p > high_52w: safety_score += 10
+                if rsi_14 > 70: safety_score += 10  
+                elif rsi_14 < 40: safety_score -= 15 
+                safety_score += min(abs(theta) * 3, 10) 
+                safety_score = max(0, min(100, safety_score))
+
+                score_breakdown = {
+                    "Veto Status": "✅ Passed Hard Limits",
+                    f"Actual Upside": f"{actual_up_pct:.1f}%",
+                    f"Historical Breach": f"{prob:.1f}% (Limit: 8%)",
+                    f"Theoretical Delta": f"{delta:.2f} (Limit: 0.12)",
+                    f"Recent Resistance Touches": f"{days_above_target_3m} (Limit: 0)",
+                    "Final Safety Score": round(safety_score, 1)
+                }
+
+                rank_tuple = (safety_score, tot_prof) 
+                if rank_tuple > best_stock_rank:
+                    best_stock_rank = rank_tuple
+                    best_stock_trade = {
+                        'Stock': clean_symbol, 'Sector': sector, 'Upside': f"{actual_up_pct:.1f}", 'Target': real_target_p,
+                        'Lots': lots, 'Total_Profit': tot_prof, 'Risk': prob, 'Safety_Score': safety_score,
+                        'HV': hv, 'Delta': delta, 'Margin': marg_req * lots if call_type == "Naked (Uncovered)" else cont_value * lots,
+                        'Breakdown': score_breakdown
+                    }
         
         if best_stock_trade:
             global_recommendation_pool[clean_symbol] = best_stock_trade
 
-        # --- Process Main UI Table ---
+        # --- Process Main UI Table (User's Exact Dropdown Selection) ---
         raw_target_p = cmp * (1 + (target_upside / 100))
         real_target_p = get_real_strike(cmp, raw_target_p)
         actual_up_pct = ((real_target_p - cmp) / cmp) * 100
         
         prob = (len(rolling_returns[rolling_returns >= actual_up_pct]) / total_periods) * 100 if total_periods > 0 else 0
         bs_price, delta, theta = black_scholes_metrics(cmp, real_target_p, days_to_expiry, hv)
-        
-        prob_penalty = -(prob * 2.0) 
-        vol_penalty = -(hv / 2.0)    
         days_above_target_3m = len(stock_high.tail(63)[stock_high.tail(63) >= real_target_p])
-        days_above_target_older_3m = max(0, len(stock_high.tail(126)[stock_high.tail(126) >= real_target_p]) - days_above_target_3m)
         
-        res_adj = 0
-        res_adj -= min(days_above_target_3m * 5.0, 50) 
-        res_adj -= min(days_above_target_older_3m * 2.0, 20) 
-        if real_target_p > high_52w: res_adj += 10  
-
-        rsi_adj = 0
-        if rsi_14 > 70: rsi_adj = +10  
-        elif rsi_14 < 40: rsi_adj = -20 
-        
-        delta_penalty = 0
-        if delta > 0.12: delta_penalty = -(delta - 0.12) * 250 
-        theta_bonus = min(abs(theta) * 3, 10) 
-
-        main_safety_score = 100 + prob_penalty + vol_penalty + res_adj + rsi_adj + delta_penalty + theta_bonus
-        main_safety_score = max(0, min(100, main_safety_score))
+        # Apply Veto logic to Main Table Status
+        table_veto = None
+        if call_type == "Naked (Uncovered)":
+            if actual_up_pct < 10.0: table_veto = "⛔ Upside < 10%"
+            elif prob > 8.0: table_veto = f"⛔ Hist. Breach > 8%"
+            elif delta > 0.12: table_veto = f"⛔ High Delta"
+            elif days_above_target_3m > 0: table_veto = f"⛔ Resistance Risk"
+        else:
+            if actual_up_pct < 7.0: table_veto = "⛔ Upside < 7%"
+            elif prob > 15.0: table_veto = f"⛔ Hist. Breach > 15%"
+            elif delta > 0.20: table_veto = f"⛔ High Delta"
+            
+        status_msg = "✅ Pass" if table_veto is None else table_veto
 
         premium_per_lot = bs_price * lot_size
         contract_value = cmp * lot_size
@@ -263,17 +242,15 @@ def process_screener_data(historical_data, tickers_dict, margin_available, call_
             'Stock': clean_symbol,
             'Sector': sector,
             'CMP': fmt_inr_dec(cmp),
-            '52W High': fmt_inr_dec(high_52w),
-            '52W Low': fmt_inr_dec(low_52w),
-            'Real Strike Target': fmt_inr_dec(real_target_p),
-            'Safety Score': f"{main_safety_score:.1f}",
+            'Real Strike': fmt_inr_dec(real_target_p),
+            'Veto Status': status_msg,
             'Lot Size': f"{lot_size:,}",
-            'Theo. Delta (Δ)': f"{delta:.2f}",
+            'Theo. Delta': f"{delta:.2f}",
             'Premium / Lot': fmt_inr_dec(premium_per_lot), 
             'Margin / Lot': fmt_inr(margin_req_per_lot if call_type == "Naked (Uncovered)" else contract_value),
             'Max Lots': max_lots,
             'Total Profit': fmt_inr(total_profit),
-            'Hist. Breach (%)': f"{prob:.0f}%",
+            'Hist. Breach': f"{prob:.0f}%",
             'Liquidity': liquidity_status,
         })
 
@@ -283,8 +260,8 @@ def process_screener_data(historical_data, tickers_dict, margin_available, call_
     return main_df, sorted_recs
 
 # --- UI LAYOUT ---
-st.title("🛡️ Indian IPO Blog: Deep OTM Screener")
-st.markdown("Prioritizing absolute structural safety by exclusively targeting 10%+ OTM strikes.")
+st.title("🛡️ Indian IPO Blog: Ironclad Risk Screener")
+st.markdown("Enforcing institutional hard-limits. High yield cannot compensate for structural risk.")
 
 with st.sidebar:
     st.header("Trade Parameters")
@@ -301,31 +278,29 @@ with st.sidebar:
     st.markdown("---")
     st.header("Screener Filters")
     sector_filter = st.selectbox("Filter by Sector", ["All Sectors", "Banking & Finance", "IT & Tech", "Automobile", "Pharma", "FMCG", "Metals & Mining", "Others"])
-    
-    # 5% and 7% removed from the UI Dropdown entirely
     target_upside = st.selectbox("Target Upside Base (%)", [10, 12, 15, 18, 20], index=0)
 
 historical_data = fetch_market_data(FO_STOCKS)
 main_df, top_5_recs = None, None
 
-with st.spinner("Calculating deep OTM actual exchange strikes, applying strict risk limits, and securing safety scores..."):
+with st.spinner("Enforcing Veto Limits (Max 8% Breach, Max 0.12 Delta, Zero Resistance Touches)..."):
     main_df, top_5_recs = process_screener_data(historical_data, FO_STOCKS, margin_input, call_type, days_to_expiry, target_upside)
 
 if main_df is not None and not main_df.empty:
     if sector_filter != "All Sectors":
         main_df = main_df[main_df['Sector'] == sector_filter]
 
-    tab1, tab2 = st.tabs(["📊 Main Screener Matrix", "🏆 Top 5 Safest Setups"])
+    tab1, tab2 = st.tabs(["📊 Main Screener Matrix", "🏆 Top 5 Ironclad Setups"])
     
     with tab1:
         st.subheader(f"Showing Options near {target_upside}% OTM")
-        st.dataframe(main_df, use_container_width=True, hide_index=True)
-        st.caption("Note: 'Real Strike Target' forces the strike UP to the nearest valid exchange interval for added safety.")
+        st.dataframe(main_df.style.apply(lambda x: ['color: red; font-weight: bold' if '⛔' in str(v) else 'color: green' if '✅' in str(v) else '' for v in x], subset=['Veto Status']), use_container_width=True, hide_index=True)
+        st.caption("Check the 'Veto Status' column to see exactly which hard-limit a stock failed.")
 
     with tab2:
         st.success(f"🎯 **Target Expiry Strategy:** Selling options expiring on **{selected_expiry_str}** ({days_to_expiry} Days to Expiry).")
-        st.subheader("The Playbook: Safest Possible Trades First")
-        st.markdown(f"The algorithm ignores 5% and 7% targets entirely, forcing recommendations to pull from the structurally safer **10% to 20% OTM** universe.")
+        st.subheader("The Playbook: Only Trades That Passed All Vetoes")
+        st.markdown(f"The algorithm rejects any Naked Call with a historical breach > 8%, Delta > 0.12, or any resistance touches in the last 3 months.")
         
         if top_5_recs:
             for idx, rec in enumerate(top_5_recs, 1):
@@ -339,19 +314,13 @@ if main_df is not None and not main_df.empty:
                     col3.metric("Theo. Delta (Δ)", f"{rec['Delta']:.2f}")
                     col4.metric("Historical Breach", f"{rec['Risk']:.0f}%")
                     
-                    with st.expander("🔍 View Conservative Algorithm Breakdown"):
-                        st.markdown(f"**How {rec['Stock']}'s safety was audited:**")
+                    with st.expander("🔍 View Ironclad Audit Trail"):
                         for factor, score in rec['Breakdown'].items():
-                            if type(score) == str and "%" in score:
-                                st.markdown(f"* **{factor}:** {score}")
-                            else:
-                                color = "green" if float(score) > 0 and factor not in ["Base Score", "Final Safety Score"] else "red" if float(score) < 0 else "black"
-                                sign = "+" if float(score) > 0 and factor not in ["Base Score", "Final Safety Score"] else ""
-                                st.markdown(f"* **{factor}:** <span style='color:{color}'>{sign}{score}</span>", unsafe_allow_html=True)
-                        st.caption("Profit is ignored during ranking. The highest Safety Score wins. Maximum allowed Naked Delta is severely strict (0.15).")
+                            color = "green" if "Passed" in str(score) else "black"
+                            st.markdown(f"* **{factor}:** <span style='color:{color}'>{score}</span>", unsafe_allow_html=True)
                             
                     st.markdown("---")
         else:
-            st.warning("No trades found matching the conservative safety criteria in the deep OTM range. The market may be too volatile, or capital is insufficient.")
+            st.warning("No trades found matching the Ironclad safety criteria. The strict limits correctly prevented taking on excess risk in current market conditions.")
 else:
     st.error("Failed to process market data. Please check connection.")
