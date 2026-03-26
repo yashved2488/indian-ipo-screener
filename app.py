@@ -7,7 +7,7 @@ import math
 from dateutil.relativedelta import relativedelta, TH
 
 # --- CONFIGURATION ---
-st.set_page_config(page_title="Indian IPO Blog | Conservative Risk Screener", layout="wide", page_icon="📈")
+st.set_page_config(page_title="Indian IPO Blog | Deep OTM Screener", layout="wide", page_icon="📈")
 
 FO_STOCKS = {
     'AARTIIND.NS': 1000, 'ABB.NS': 250, 'ABBOTINDIA.NS': 40, 'ABCAPITAL.NS': 5400, 'ABFRL.NS': 2600, 'ACC.NS': 300, 'ADANIENT.NS': 300, 'ADANIPORTS.NS': 800, 'ALKEM.NS': 200, 'AMBUJACEM.NS': 1800, 'APOLLOHOSP.NS': 125, 'APOLLOTYRE.NS': 1700, 'ASHOKLEY.NS': 5000, 'ASIANPAINT.NS': 200, 'ASTRAL.NS': 275, 'ATUL.NS': 75, 'AUBANK.NS': 1000, 'AUROPHARMA.NS': 1000, 'AXISBANK.NS': 625, 'BAJAJ-AUTO.NS': 125, 'BAJAJFINSV.NS': 500, 'BAJFINANCE.NS': 125, 'BALKRISIND.NS': 300, 'BALRAMCHIN.NS': 1600, 'BANDHANBNK.NS': 2500, 'BANKBARODA.NS': 5850, 'BATAINDIA.NS': 375, 'BEL.NS': 3800, 'BERGEPAINT.NS': 1100, 'BHARATFORG.NS': 500, 'BHARTIARTL.NS': 950, 'BHEL.NS': 5250, 'BIOCON.NS': 2500, 'BOSCHLTD.NS': 50, 'BPCL.NS': 1800, 'BRITANNIA.NS': 200, 'CANBK.NS': 2700, 'CANFINHOME.NS': 975, 'CHAMBLFERT.NS': 1900, 'CHOLAFIN.NS': 1250, 'CIPLA.NS': 650, 'COALINDIA.NS': 4200, 'COFORGE.NS': 150, 'COLPAL.NS': 350, 'CONCOR.NS': 1000, 'COROMANDEL.NS': 700, 'CROMPTON.NS': 1800, 'CUB.NS': 5000, 'CUMMINSIND.NS': 300, 'DABUR.NS': 1250, 'DALBHARAT.NS': 250, 'DEEPAKNTR.NS': 300, 'DIVISLAB.NS': 200, 'DIXON.NS': 100, 'DLF.NS': 1650, 'DRREDDY.NS': 125, 'EICHERMOT.NS': 175, 'ESCORTS.NS': 275, 'EXIDEIND.NS': 3600, 'FEDERALBNK.NS': 5000, 'GAIL.NS': 9150, 'GLENMARK.NS': 700, 'GMRINFRA.NS': 11250, 'GNFC.NS': 1300, 'GODREJCP.NS': 500, 'GODREJPROP.NS': 475, 'GRANULES.NS': 2000, 'GRASIM.NS': 475, 'GUJGASLTD.NS': 1250, 'HAL.NS': 300, 'HAVELLS.NS': 500, 'HCLTECH.NS': 700, 'HDFCAMC.NS': 150, 'HDFCBANK.NS': 550, 'HDFCLIFE.NS': 1100, 'HEROMOTOCO.NS': 300, 'HINDALCO.NS': 1400, 'HINDCOPPER.NS': 4300, 'HINDPETRO.NS': 2700, 'HINDUNILVR.NS': 300, 'ICICIBANK.NS': 700, 'ICICIGI.NS': 500, 'ICICIPRULI.NS': 1500, 'IDEA.NS': 80000, 'IDFCFIRSTB.NS': 15000, 'IEX.NS': 3750, 'IGL.NS': 1375, 'INDHOTEL.NS': 2000, 'INDIACEM.NS': 2900, 'INDIAMART.NS': 150, 'INDIGO.NS': 300, 'INDUSINDBK.NS': 500, 'INDUSTOWER.NS': 3400, 'INFY.NS': 400, 'IOC.NS': 9750, 'IPCALAB.NS': 650, 'IRCTC.NS': 875, 'ITC.NS': 1600, 'JINDALSTEL.NS': 1250, 'JKCEMENT.NS': 250, 'JSWSTEEL.NS': 675, 'JUBLFOOD.NS': 1250, 'KOTAKBANK.NS': 400, 'L&TFH.NS': 4462, 'LALPATHLAB.NS': 250, 'LAURUSLABS.NS': 1700, 'LICHSGFIN.NS': 2000, 'LT.NS': 300, 'LTIM.NS': 150, 'LTTS.NS': 200, 'LUPIN.NS': 850, 'M&M.NS': 350, 'M&MFIN.NS': 4000, 'MANAPPURAM.NS': 6000, 'MARICO.NS': 1200, 'MARUTI.NS': 50, 'MCX.NS': 400, 'METROPOLIS.NS': 400, 'MFSL.NS': 800, 'MGL.NS': 800, 'MOTHERSON.NS': 7100, 'MPHASIS.NS': 275, 'MRF.NS': 10, 'MUTHOOTFIN.NS': 550, 'NATIONALUM.NS': 7500, 'NAUKRI.NS': 150, 'NAVINFLUOR.NS': 150, 'NESTLEIND.NS': 400, 'NMDC.NS': 4500, 'NTPC.NS': 3000, 'OBEROIRLTY.NS': 700, 'OFSS.NS': 200, 'ONGC.NS': 3850, 'PAGEIND.NS': 15, 'PEL.NS': 750, 'PERSISTENT.NS': 175, 'PETRONET.NS': 3000, 'PFC.NS': 3875, 'PIDILITIND.NS': 250, 'PIIND.NS': 250, 'PNB.NS': 8000, 'POLYCAB.NS': 100, 'POWERGRID.NS': 3600, 'PVRINOX.NS': 407, 'RAMCOCEM.NS': 850, 'RBLBANK.NS': 2500, 'RECLTD.NS': 2000, 'RELIANCE.NS': 250, 'SAIL.NS': 8000, 'SBICARD.NS': 800, 'SBILIFE.NS': 750, 'SBIN.NS': 1500, 'SHREECEM.NS': 25, 'SHRIRAMFIN.NS': 300, 'SIEMENS.NS': 150, 'SRF.NS': 375, 'SUNTV.NS': 1500, 'SYNGENE.NS': 1000, 'TATACHEM.NS': 550, 'TATACOMM.NS': 500, 'TATACONSUM.NS': 900, 'TATAMOTORS.NS': 1425, 'TATAPOWER.NS': 3375, 'TATASTEEL.NS': 5500, 'TCS.NS': 175, 'TECHM.NS': 600, 'TITAN.NS': 175, 'TORNTPHARM.NS': 250, 'TRENT.NS': 400, 'TVSMOTOR.NS': 700, 'UBL.NS': 400, 'ULTRACEMCO.NS': 100, 'UPL.NS': 1300, 'VEDL.NS': 2000, 'VOLTAS.NS': 600, 'WIPRO.NS': 1500, 'ZEEL.NS': 3000, 'ZYDUSLIFE.NS': 900
@@ -136,7 +136,8 @@ def process_screener_data(historical_data, tickers_dict, margin_available, call_
         best_stock_rank = (-999, -999) 
         best_stock_trade = None
         
-        for up in [5, 7, 10, 15, 20]:
+        # EXCISED 5% and 7%. FORCING DEEP OTM ONLY:
+        for up in [10, 12, 15, 18, 20]:
             raw_target_p = cmp * (1 + (up / 100))
             real_target_p = get_real_strike(cmp, raw_target_p)
             actual_up_pct = ((real_target_p - cmp) / cmp) * 100
@@ -145,9 +146,7 @@ def process_screener_data(historical_data, tickers_dict, margin_available, call_
             
             bs_price, delta, theta = black_scholes_metrics(cmp, real_target_p, days_to_expiry, hv)
             
-            # --- CONSERVATIVE SCORING ALGORITHM ---
             safety_score = 100
-            
             prob_penalty = -(prob * 2.0) 
             vol_penalty = -(hv / 2.0)    
             
@@ -227,7 +226,6 @@ def process_screener_data(historical_data, tickers_dict, margin_available, call_
         prob = (len(rolling_returns[rolling_returns >= actual_up_pct]) / total_periods) * 100 if total_periods > 0 else 0
         bs_price, delta, theta = black_scholes_metrics(cmp, real_target_p, days_to_expiry, hv)
         
-        # Calculate Main Table Safety Score
         prob_penalty = -(prob * 2.0) 
         vol_penalty = -(hv / 2.0)    
         days_above_target_3m = len(stock_high.tail(63)[stock_high.tail(63) >= real_target_p])
@@ -285,8 +283,8 @@ def process_screener_data(historical_data, tickers_dict, margin_available, call_
     return main_df, sorted_recs
 
 # --- UI LAYOUT ---
-st.title("🛡️ Indian IPO Blog: Conservative Options Screener")
-st.markdown("Prioritizing absolute safety by sorting strictly by Risk Score and mapping to real-world exchange strikes.")
+st.title("🛡️ Indian IPO Blog: Deep OTM Screener")
+st.markdown("Prioritizing absolute structural safety by exclusively targeting 10%+ OTM strikes.")
 
 with st.sidebar:
     st.header("Trade Parameters")
@@ -303,12 +301,14 @@ with st.sidebar:
     st.markdown("---")
     st.header("Screener Filters")
     sector_filter = st.selectbox("Filter by Sector", ["All Sectors", "Banking & Finance", "IT & Tech", "Automobile", "Pharma", "FMCG", "Metals & Mining", "Others"])
-    target_upside = st.selectbox("Target Upside Base (%)", [5, 7, 10, 15, 20], index=0)
+    
+    # 5% and 7% removed from the UI Dropdown entirely
+    target_upside = st.selectbox("Target Upside Base (%)", [10, 12, 15, 18, 20], index=0)
 
 historical_data = fetch_market_data(FO_STOCKS)
 main_df, top_5_recs = None, None
 
-with st.spinner("Calculating actual exchange strikes, applying strict risk limits, and securing safety scores..."):
+with st.spinner("Calculating deep OTM actual exchange strikes, applying strict risk limits, and securing safety scores..."):
     main_df, top_5_recs = process_screener_data(historical_data, FO_STOCKS, margin_input, call_type, days_to_expiry, target_upside)
 
 if main_df is not None and not main_df.empty:
@@ -325,7 +325,7 @@ if main_df is not None and not main_df.empty:
     with tab2:
         st.success(f"🎯 **Target Expiry Strategy:** Selling options expiring on **{selected_expiry_str}** ({days_to_expiry} Days to Expiry).")
         st.subheader("The Playbook: Safest Possible Trades First")
-        st.markdown(f"The algorithm now ignores the profit multiplier and ranks these strictly by maximum safety. It mathematically rounds strikes **UP** to give you a wider margin of error.")
+        st.markdown(f"The algorithm ignores 5% and 7% targets entirely, forcing recommendations to pull from the structurally safer **10% to 20% OTM** universe.")
         
         if top_5_recs:
             for idx, rec in enumerate(top_5_recs, 1):
@@ -352,6 +352,6 @@ if main_df is not None and not main_df.empty:
                             
                     st.markdown("---")
         else:
-            st.warning("No trades found matching the conservative safety criteria. The market may be too volatile, or capital is insufficient.")
+            st.warning("No trades found matching the conservative safety criteria in the deep OTM range. The market may be too volatile, or capital is insufficient.")
 else:
     st.error("Failed to process market data. Please check connection.")
